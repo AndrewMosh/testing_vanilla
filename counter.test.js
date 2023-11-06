@@ -14,6 +14,9 @@ describe("iting converting steps into km and cals", () => {
   it("toBe matcher", () => {
     expect(5 + 5).toBe(10);
   });
+  it("toBe not matcher", () => {
+    expect(5 + 5).not.toBe(0);
+  });
 
   it("toEqual matcher", () => {
     const data = { one: 1 };
@@ -51,6 +54,9 @@ describe("iting converting steps into km and cals", () => {
   it("toContain matcher", () => {
     expect("Hello, Jest!").toContain("Jest");
   });
+  it("toContain matcher", () => {
+    expect("Hello, Jest!").toMatch(/Jest/);
+  });
 
   // Проверка массивов
   it("toContain matcher for arrays", () => {
@@ -76,7 +82,32 @@ describe("iting converting steps into km and cals", () => {
     mockFunction();
     expect(mockFunction).toHaveBeenCalledTimes(2);
   });
+  it("resolves to lemon", async () => {
+    await expect(Promise.resolve("lemon")).resolves.toBe("lemon");
+    await expect(Promise.resolve("lemon")).resolves.not.toBe("octopus");
+  });
+  it("rejects to octopus", () => {
+    // make sure to add a return statement
+    return expect(Promise.reject(new Error("octopus"))).rejects.toThrow(
+      "octopus"
+    );
+  });
+  it("drinks returns", () => {
+    const drink = jest.fn(() => true);
 
+    drink();
+
+    expect(drink).toHaveReturned();
+  });
+
+  it("drink returns La Croix", () => {
+    const beverage = { name: "La Croix" };
+    const drink = jest.fn((beverage) => beverage.name);
+
+    drink(beverage);
+
+    expect(drink).toHaveReturnedWith("La Croix");
+  });
   // Проверка ошибок
   it("toThrow matcher", () => {
     const throwError = () => {
